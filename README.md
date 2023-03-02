@@ -1,6 +1,7 @@
 # Mad-Horse
 
 ## References
-<ul>
+<ol>
 <a href="https://www.w3schools.com/html/html5_canvas.asp">Canvas</a>
-</ul>
+ <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/transform-function/translate">Translate</a>
+</ol>
