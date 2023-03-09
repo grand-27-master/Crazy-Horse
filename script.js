@@ -138,6 +138,8 @@ window.addEventListener('load',()=>{
            this.x=this.game.width;
            this.speedX=Math.random()*-1.5-0.5;
            this.deleteEnemy=false;
+           this.lives=10;
+           this.score=this.lives;
         }
 
         update()
@@ -151,6 +153,9 @@ window.addEventListener('load',()=>{
         {
             context.fillStyle='red';
             context.fillRect(this.x,this.y,this.width,this.height);
+            context.fillStyle='black';
+            context.font='20px Arial';
+            context.fillText(this.lives,this.x+this.width/2,this.y+this.height/2);
         }
     }
 
