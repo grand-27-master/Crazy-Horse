@@ -52,7 +52,7 @@ window.addEventListener('load',()=>{
         draw(context)
         {
             context.fillStyle='yellow';
-            context.fillRect(this.x,this.y,this.width,this.height);   
+            context.fillRect(this.x,this.y,20,10);   
         }
     }
 
@@ -138,7 +138,7 @@ window.addEventListener('load',()=>{
            this.x=this.game.width;
            this.speedX=Math.random()*-1.5-0.5;
            this.deleteEnemy=false;
-           this.lives=10;
+           this.lives=Math.floor(Math.random()*100+1);
            this.score=this.lives;
         }
 
@@ -182,14 +182,31 @@ window.addEventListener('load',()=>{
         constructor(game)
         {
             this.game=game;
-
         }
         draw(context)
         {
+            //score
             context.fillStyle='white';
+            context.fillText('Score='+this.game.score,20,40);
+            // ammo
+            // context.fillStyle='white';
             for(var i=0;i<this.game.ammo;i++)
             {
                 context.fillRect(20+5*i,50,3,20);
+            }
+
+            // game over messages
+            if(this.game.gameOver)
+            {
+                context.fillStyle='green';
+                context.font='40px Arial';
+                if(this.game.score>=this.game.winningScore)
+                context.fillText('You win!',this.game.width/2-100,this.game.height/2);
+
+                else{
+                    context.fillStyle='red';
+                    context.fillText('You lost!',this.game.width/2-100,this.game.height/2);
+                }
             }
         }
     }
@@ -211,9 +228,10 @@ window.addEventListener('load',()=>{
             this.enemies=[];
             this.enemyinterval=1000;
             this.enemytimer=0;
-            // this.gameOver=false;
+            this.gameOver=false;
             // this.enemy1=new Enemy1(this);
             this.score=0;
+            this.winningScore=100;
             // this.scoreinterval=1000;
             // this.scoretimer=0;
         }
@@ -250,6 +268,16 @@ window.addEventListener('load',()=>{
                     {
                         enemy.deleteEnemy=true;
                         // console.log('collision detected');
+                        // if(enemy.lives<=0)
+                        // {
+                           // enemy.deleteEnemy=true;
+                            this.score+=enemy.score;
+                            enemy.lives--;
+
+                            if(this.score>this.winningScore)
+                            {
+                                this.gameOver=true;
+                            }
                     }
                 })
             })
