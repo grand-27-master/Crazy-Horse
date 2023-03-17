@@ -1,13 +1,36 @@
+body
+{
+    /* background-image: url("./Assets/layer3.png"); */
+    background-image: url("https://t3.ftcdn.net/jpg/02/71/50/04/360_F_271500423_Ls3YOwFx6DqHy4nUvAV2P0G2UQwFeQaq.jpg");
+}
+
 #canvas
 {
-    border: 5px solid black;
+    border: 5px solid white;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    background-color: rgb(99, 110, 206);
+    /* background-color: rgb(99, 110, 206); */
     /* width: 1500px;
     height: 500px; */
     max-width: 100%;
     max-height: 100%;
+}
+/*
+#l3
+{
+    backface-visibility: hidden;
+    background: transparent;
+    max-width: 100%;
+    max-height: 100%;
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+*/
+
+#p
+{
+    display: none;
 }

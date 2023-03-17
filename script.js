@@ -73,6 +73,12 @@ window.addEventListener('load',()=>{
             // this.speedX=0;
             this.maxSpeed=5;
             this.projectiles=[];
+            this.playerImage=document.getElementById('p');
+
+            // image frames
+            this.frameX=0;
+            this.frameY=0;
+            this.maxFrame=35;
         }
 
         update()
@@ -113,11 +119,18 @@ window.addEventListener('load',()=>{
 
         draw(context)
         {
-            context.fillStyle='black';
-            context.fillRect(this.x,this.y,this.width,this.height)
+            // context.fillStyle='black';
+            // context.fillRect(this.x,this.y,this.width,this.height)
+            context.drawImage(this.playerImage,this.frameX*this.width,this.frameY*this.height,this.width,this.height,this.x,this.y,this.width,this.height);
             this.projectiles.forEach(p=>{
                 p.draw(context);
             })
+
+            // player image animation
+            if(this.frameX<this.maxFrame)
+            this.frameX++;
+            else
+            this.frameX=0;
         }
 
         shoot()
@@ -170,13 +183,13 @@ window.addEventListener('load',()=>{
         }
     }
 
-    class Layer{
+    // class Layer{
 
-    }
+    // }
 
-    class Background{
+    // class Background{
 
-    }
+    // }
 
     class UI{
         constructor(game)
@@ -187,28 +200,36 @@ window.addEventListener('load',()=>{
         {
             //score
             context.fillStyle='white';
+            context.font='25px Monserrat';
             context.fillText('Score='+this.game.score,20,40);
             // ammo
             // context.fillStyle='white';
             for(var i=0;i<this.game.ammo;i++)
             {
-                context.fillRect(20+5*i,50,3,20);
+                context.fillRect(20+5*i,50,3.5,20);
             }
 
             // game over messages
             if(this.game.gameOver)
             {
-                context.fillStyle='green';
-                context.font='40px Arial';
+                // context.fillStyle='white';
+                // context.font='50px Arial';
                 if(this.game.score>=this.game.winningScore)
-                context.fillText('You win!',this.game.width/2-100,this.game.height/2);
+                {
+                    // context.fillText('You won!',this.game.width/2-100,this.game.height/2);
+                    // windows.clearRect(0,0,this.game.width,this.game.height);
+                    document.body.innerHTML = "<h1>YOU WON!</h1>";
+                    document.body.style.color = "white";
+                    document.body.compareDocumentPosition = "center";
+                }
 
-                else{
+                else
+                {
                     context.fillStyle='red';
                     context.fillText('You lost!',this.game.width/2-100,this.game.height/2);
                 }
             }
-        }
+        } 
     }
 
     class Game{
