@@ -1,4 +1,4 @@
-# Mad-Horse
+# Crazy-Horse
 
 ## References
 <ol>
