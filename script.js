@@ -1,5 +1,6 @@
 window.addEventListener('load',()=>{
     const canvas=document.getElementById('canvas')
+
     // returns a drawing context on the canvas
     const ctx=canvas.getContext('2d');
     canvas.width=1500;
@@ -42,6 +43,7 @@ window.addEventListener('load',()=>{
             this.height=20;
             this.speed=5;
             this.deleteProjectile=false;
+            this.projectileImage=document.getElementById('shoot');
         }
         update()
         {
@@ -51,13 +53,18 @@ window.addEventListener('load',()=>{
         }
         draw(context)
         {
-            context.fillStyle='yellow';
-            context.fillRect(this.x,this.y,20,10);   
+            // context.fillStyle='yellow';
+            // // context.fillRect(this.x,this.y,20,10);
+            // context.beginPath();
+            // context.arc(this.x,this.y,10,0,Math.PI*2);
+            // context.fill();
+
+            context.drawImage(this.projectileImage,this.x,this.y,this.width,this.height);
         }
     }
 
     class Particle{
-
+        
     }
 
     class Player{
@@ -153,6 +160,11 @@ window.addEventListener('load',()=>{
            this.deleteEnemy=false;
            this.lives=Math.floor(Math.random()*100+1);
            this.score=this.lives;
+
+            // image frames
+            this.frameX=0;
+            this.frameY=0;
+            this.maxFrame=37;
         }
 
         update()
@@ -160,13 +172,20 @@ window.addEventListener('load',()=>{
             this.x+=this.speedX;
             if(this.x+this.width<0)
             this.deleteEnemy=true;
+
+             // enemy image animation
+             if(this.frameX<this.maxFrame)
+             this.frameX++;
+             else
+             this.frameX=0;
         }
 
         draw(context)
         {
-            context.fillStyle='red';
-            context.fillRect(this.x,this.y,this.width,this.height);
-            context.fillStyle='black';
+            // context.fillStyle='red';
+            // context.fillRect(this.x,this.y,this.width,this.height);
+            context.drawImage(this.enemyImage,this.frameX*this.width,this.frameY*this.height,this.width,this.height,this.x,this.y,this.width,this.height);
+            context.fillStyle='white';
             context.font='20px Arial';
             context.fillText(this.lives,this.x+this.width/2,this.y+this.height/2);
         }
@@ -177,9 +196,11 @@ window.addEventListener('load',()=>{
         {
             // calls parent constructor
             super(game);
-            this.width=228*0.2;
-            this.height=169*0.2;
+            this.width=228;
+            this.height=169;
             this.y=Math.random()*((this.game.height*0.9)-(this.height));
+            this.enemyImage=document.getElementById('e');
+            this.frameY=Math.floor(Math.random()*3);
         }
     }
 
@@ -200,8 +221,8 @@ window.addEventListener('load',()=>{
         {
             //score
             context.fillStyle='white';
-            context.font='25px Monserrat';
-            context.fillText('Score='+this.game.score,20,40);
+            context.font='25px Bangers';
+            context.fillText('Score : '+this.game.score,20,40);
             // ammo
             // context.fillStyle='white';
             for(var i=0;i<this.game.ammo;i++)
@@ -220,12 +241,14 @@ window.addEventListener('load',()=>{
                     // windows.clearRect(0,0,this.game.width,this.game.height);
                     document.body.innerHTML = "<h1>YOU WON!</h1>";
                     document.body.style.color = "white";
+                    document.body.style.fontFamily = "Bangers";
                     document.body.compareDocumentPosition = "center";
                 }
 
                 else
                 {
                     context.fillStyle='red';
+                    context.font='35px Bangers';
                     context.fillText('You lost!',this.game.width/2-100,this.game.height/2);
                 }
             }
@@ -252,7 +275,7 @@ window.addEventListener('load',()=>{
             this.gameOver=false;
             // this.enemy1=new Enemy1(this);
             this.score=0;
-            this.winningScore=100;
+            this.winningScore=500;
             // this.scoreinterval=1000;
             // this.scoretimer=0;
         }
