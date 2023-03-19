@@ -237,8 +237,52 @@ window.addEventListener('load',()=>{
 
     // }
 
-    class Explosion{
+    class Explosion
+    {
+        constructor(game,x,y)
+        {
+            this.game=game;
+            this.x=x;
+            this.y=y;
+            this.frameX=0;
+            this.frameY=0;
+            this.maxFrame=9;
+            this.deleteExplosion=false;
+        }
+
+        update()
+        {
+            if(this.frameX<this.maxFrame)
+            this.frameX++;
+            else
+            this.deleteExplosion=true;
+        }
+
+        draw(context)
+        {
+            context.drawImage(this.explosionImage,this.frameX*this.width,this.frameY*this.height,this.width,this.height,this.x,this.y,this.width,this.height);
+        }
     }
+
+    class Explosion1 extends Explosion{
+        constructor(game,x,y)
+        {
+            super(game,x,y);
+            this.width=128;
+            this.height=128;
+            this.explosionImage=document.getElementById('exp');
+        }
+    }
+
+    class Explosion2 extends Explosion{
+        constructor(game,x,y)
+        {
+            super(game,x,y);
+            this.width=128;
+            this.height=128;
+            this.explosionImage=document.getElementById('exp2');
+        }
+    }   
 
     class UI{
         constructor(game)
