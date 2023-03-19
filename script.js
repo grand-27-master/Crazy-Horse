@@ -64,7 +64,32 @@ window.addEventListener('load',()=>{
     }
 
     class Particle{
-        
+        constructor(game,x,y)
+        {
+            this.game=game;
+            this.x=x;
+            this.y=y;
+            this.gearProp=document.getElementById('gear');
+            this.frameX=Math.floor(Math.random()*3);
+            this.frameY=Math.floor(Math.random()*3);
+            this.size=50;
+            this.deleteParticle=false;
+            this.speedX=Math.random()*-1.5-0.5;
+            this.speedY=Math.random()*-1.5-0.5;
+            this.gravity=0.5;
+        }
+
+        update()
+        {
+           this.x-=this.speedX;
+           this.y+=this.speedY;
+           this.speedY+=this.gravity;
+        }
+
+        draw(context)
+        {
+            context.drawImage(this.gearProp,this.frameX*this.size,this.frameY*this.size,this.size,this.size,this.x,this.y,this.size,this.size);
+        }
     }
 
     class Player{
@@ -212,6 +237,9 @@ window.addEventListener('load',()=>{
 
     // }
 
+    class Explosion{
+    }
+
     class UI{
         constructor(game)
         {
@@ -270,6 +298,7 @@ window.addEventListener('load',()=>{
             this.ammotimer=0;
             this.ui=new UI(this);
             this.enemies=[];
+            this.particles=[];
             this.enemyinterval=1000;
             this.enemytimer=0;
             this.gameOver=false;
@@ -296,6 +325,12 @@ window.addEventListener('load',()=>{
                 this.ammotimer=0;
             }
 
+            this.particles.forEach(particle=>{
+                particle.update();
+            })
+
+            this.particles=this.particles.filter(particle=>!particle.deleteParticle);
+
             this.enemies.forEach(enemy=>{
                 enemy.update();
 
@@ -304,6 +339,10 @@ window.addEventListener('load',()=>{
                     // console.log('collision detected');
                     enemy.deleteEnemy=true;
                     // this.player.deleteEnemy=true;
+                    for(var i=0;i<10;i++)
+                    {
+                        this.particles.push(new Particle(this,enemy.x+enemy.width*0.5,enemy.y+enemy.height*0.5));
+                    }
                 }
 
                 this.player.projectiles.forEach(p=>{
@@ -311,6 +350,7 @@ window.addEventListener('load',()=>{
                     if(this.detectCollision(p,enemy))
                     {
                         enemy.deleteEnemy=true;
+                        this.particles.push(new Particle(this,enemy.x+enemy.width*0.5,enemy.y+enemy.height*0.5));
                         // console.log('collision detected');
                         // if(enemy.lives<=0)
                         // {
@@ -343,6 +383,9 @@ window.addEventListener('load',()=>{
         {
             this.player.draw(context);
             this.ui.draw(context);
+            // this.particles.forEach(particle=>{
+            //     particle.draw(context);
+            // })
             this.enemies.forEach(enemy=>{
                 enemy.draw(context);
                 // console.log(enemy);
