@@ -5,24 +5,36 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="./favicon_io/favicon.ico" type="image/x-icon">
-    <title>Mad Horse</title>
+    <title>Crazy Horse</title>
 </head>
 <body>
 
-
-    <!-- used to draw graphics, on the fly, via JavaScript -->
+    <!-- used to draw graphics via JavaScript -->
     <canvas id="canvas"></canvas>
 
-
-
-
-
-
-
-
-
     <script src="script.js"></script>
+
+
+    <!-- player asset -->
+    <img id="p" src="./Assets/player.png" alt="player">
+
+    <!-- enemy asset -->
+    <img id="e" src="./Assets/angler1.png" alt="enemy">
+
+    <!-- projectile asset -->
+    <img id="shoot" src="./Assets/projectile.png" alt="projectile">
+
+    <!-- props -->
+    <img id="gears" src="./Assets/gears.png" alt="gears">
+    <img id="fire" src="./Assets/fireExplosion.png" alt="fire">
+    <img id="smoke" src="./Assets/smokeExplosion.png" alt="smoke">
+
+    <!-- sound effects -->
+    <audio id="shootSound" src="./Assets/" preload="auto"></audio>
     
 </body>
 </html>
