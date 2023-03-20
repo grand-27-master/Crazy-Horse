@@ -1,3 +1,5 @@
+alert('Press spacebar to shoot and arrow keys to move')
+
 window.addEventListener('load',()=>{
     const canvas=document.getElementById('canvas')
 
@@ -12,7 +14,7 @@ window.addEventListener('load',()=>{
         {
             this.game=game;
             window.addEventListener('keydown',(e)=>{
-                if((e.key=='ArrowUp' || e.key=='ArrowDown') && this.game.keys.indexOf(e.key)==-1)
+                if((e.key=='ArrowUp' || e.key=='ArrowDown' || e.key=='ArrowLeft' || e.key=='ArrowRight') && this.game.keys.indexOf(e.key)==-1)
                 {
                     this.game.keys.push(e.key);
                 }
@@ -124,21 +126,21 @@ window.addEventListener('load',()=>{
             {
                 this.speedY=this.maxSpeed;
             }
-            // else if(this.game.keys.includes('ArrowLeft'))
-            // {
-            //     this.speedX=-this.maxSpeed;
-            // }
-            // else if(this.game.keys.includes('ArrowRight'))
-            // {
-            //     this.speedX=this.maxSpeed;
-            // }
+            else if(this.game.keys.includes('ArrowLeft'))
+            {
+                this.speedX=-this.maxSpeed;
+            }
+            else if(this.game.keys.includes('ArrowRight'))
+            {
+                this.speedX=this.maxSpeed;
+            }
             else
             {
                 this.speedY=0;
-                // this.speedX=0;
+                this.speedX=0;
             }
             this.y+=this.speedY;
-            // this.x+=this.speedX;
+            this.x+=this.speedX;
 
             // handle projectiles
             this.projectiles.forEach(p=>{
@@ -347,7 +349,7 @@ window.addEventListener('load',()=>{
             this.gameOver=false;
             // this.enemy1=new Enemy1(this);
             this.score=0;
-            this.winningScore=500;
+            this.winningScore=1000;
             // this.scoreinterval=1000;
             // this.scoretimer=0;
         }
