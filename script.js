@@ -5,7 +5,7 @@ window.addEventListener('load',()=>{
 
     // returns a drawing context on the canvas
     const ctx=canvas.getContext('2d');
-    canvas.width=1500;
+    canvas.width=1505;
     canvas.height=500;
 
     // move player using keyboard
@@ -104,10 +104,11 @@ window.addEventListener('load',()=>{
             this.x=20;
             this.y=100;
             this.speedY=0;
-            // this.speedX=0;
+            this.speedX=0;
             this.maxSpeed=5;
             this.projectiles=[];
             this.playerImage=document.getElementById('p');
+            this.deletePlayer=false;
 
             // image frames
             this.frameX=0;
@@ -149,6 +150,12 @@ window.addEventListener('load',()=>{
 
             // filter creates new array with elements that pass test implemented by function 
             this.projectiles=this.projectiles.filter(p=>!p.deleteProjectile);
+
+            this.x+=this.speedX;
+            if(this.x+this.width<0){
+            this.deletePlayer=true;
+            alert('Game Over!');
+            }
         }
 
         draw(context)
@@ -305,8 +312,6 @@ window.addEventListener('load',()=>{
             // game over messages
             if(this.game.gameOver)
             {
-                // context.fillStyle='white';
-                // context.font='50px Arial';
                 if(this.game.score>=this.game.winningScore)
                 {
                     // context.fillText('You won!',this.game.width/2-100,this.game.height/2);
@@ -315,13 +320,6 @@ window.addEventListener('load',()=>{
                     document.body.style.color = "white";
                     document.body.style.fontFamily = "Bangers";
                     document.body.compareDocumentPosition = "center";
-                }
-
-                else
-                {
-                    context.fillStyle='red';
-                    context.font='35px Bangers';
-                    context.fillText('You lost!',this.game.width/2-100,this.game.height/2);
                 }
             }
         } 
@@ -390,8 +388,8 @@ window.addEventListener('load',()=>{
                 if(this.detectCollision(this.player,enemy))
                 {
                     // console.log('collision detected');
-                    enemy.deleteEnemy=true;
-                    // this.player.deleteEnemy=true;
+                    // enemy.deleteEnemy=true;
+                    player.deletePlayer=true;
                     this.addExplosion(enemy);
                     for(var i=0;i<10;i++)
                     {
