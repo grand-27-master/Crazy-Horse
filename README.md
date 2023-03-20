@@ -1,7 +1,7 @@
 # Crazy-Horse
 
 ## Tutorial
-<p>Move the horse up and down using the <b>Up and Down keyboard keys</b>. Shoot lasers using <b>Spacebar on your keyboard</b>. Score 500 points and win the game before enemy hits you!</p>
+<p>Move the horse up and down using the <b>Up and Down keyboard keys</b>. Shoot lasers using <b>Spacebar on your keyboard</b>. Score 1000 points and win the game before enemy hits you!</p>
 
 ## References
 <ol>
