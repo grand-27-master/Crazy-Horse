@@ -5,7 +5,7 @@ window.addEventListener('load',()=>{
 
     // returns a drawing context on the canvas
     const ctx=canvas.getContext('2d');
-    canvas.width=1505;
+    canvas.width=1615;
     canvas.height=500;
 
     // move player using keyboard
