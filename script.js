@@ -173,8 +173,7 @@ window.addEventListener('load',()=>{
             this.Maxammo=30;
             this.ammointerval=200;
             this.ammotimer=0;
-            this.ui=new UI(this);
-           
+            this.ui=new UI(this);       
         }
 
         update(time)
@@ -188,6 +187,7 @@ window.addEventListener('load',()=>{
             {
                 if(this.ammo<this.Maxammo)
                 {
+                    // load ammo
                     this.ammo++;
                 }
                 this.ammotimer=0;
