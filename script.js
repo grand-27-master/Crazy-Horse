@@ -340,6 +340,7 @@ window.addEventListener('load',()=>{
             this.Maxammo=30;
             this.ammointerval=200;
             this.ammotimer=0;
+            this.ui=new UI(this);       
             this.ui=new UI(this);
             this.enemies=[];
             this.particles=[];
@@ -365,6 +366,7 @@ window.addEventListener('load',()=>{
             {
                 if(this.ammo<this.Maxammo)
                 {
+                    // load ammo
                     this.ammo++;
                 }
                 this.ammotimer=0;
@@ -388,8 +390,6 @@ window.addEventListener('load',()=>{
                 if(this.detectCollision(this.player,enemy))
                 {
                     // console.log('collision detected');
-                    // var enemyAudio=new Audio('./Assets/videogame-death-sound-43894.mp3');
-                    // enemyAudio.play();
                     enemy.deleteEnemy=true;
                     // this.player.deleteEnemy=true;
                     this.addExplosion(enemy);
@@ -403,6 +403,8 @@ window.addEventListener('load',()=>{
                     // p.update();
                     if(this.detectCollision(p,enemy))
                     {
+                        var enemyAudio=new Audio('./Sounds/dead.mp3');
+                        enemyAudio.play();
                         enemy.deleteEnemy=true;
                         this.particles.push(new Particle(this,enemy.x+enemy.width*0.5,enemy.y+enemy.height*0.5));
                         this.addExplosion(enemy);
