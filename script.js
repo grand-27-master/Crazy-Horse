@@ -229,10 +229,6 @@ window.addEventListener('load',()=>{
         }
     }
 
-    // class Layer{
-
-    // }
-
     // class Background{
 
     // }
@@ -245,22 +241,18 @@ window.addEventListener('load',()=>{
             this.x=x;
             this.y=y;
             this.frameX=0;
-            this.frameY=0;
-            this.maxFrame=9;
+            this.height=200;
             this.deleteExplosion=false;
         }
 
-        update()
+        update(time)
         {
-            if(this.frameX<this.maxFrame)
             this.frameX++;
-            else
-            this.deleteExplosion=true;
         }
 
         draw(context)
         {
-            context.drawImage(this.explosionImage,this.frameX*this.width,this.frameY*this.height,this.width,this.height,this.x,this.y,this.width,this.height);
+            context.drawImage(this.image,this.x,this.y)
         }
     }
 
@@ -268,9 +260,12 @@ window.addEventListener('load',()=>{
         constructor(game,x,y)
         {
             super(game,x,y);
-            this.width=128;
-            this.height=128;
-            this.explosionImage=document.getElementById('exp');
+            this.fireImage=document.getElementById('fire');
+            this.width=200;
+            this.w=this.width;
+            this.h=this.height;
+            this.x=x-this.w/2;
+            this.y=y-this.h/2;
         }
     }
 
@@ -278,9 +273,12 @@ window.addEventListener('load',()=>{
         constructor(game,x,y)
         {
             super(game,x,y);
-            this.width=128;
-            this.height=128;
-            this.explosionImage=document.getElementById('exp2');
+            this.smokeImage=document.getElementById('smoke');
+            this.width=200;
+            this.w=this.width;
+            this.h=this.height;
+            this.x=x-this.w/2;
+            this.y=y-this.h/2;
         }
     }   
 
@@ -343,6 +341,7 @@ window.addEventListener('load',()=>{
             this.ui=new UI(this);
             this.enemies=[];
             this.particles=[];
+            this.explosions=[];
             this.enemyinterval=1000;
             this.enemytimer=0;
             this.gameOver=false;
@@ -375,14 +374,23 @@ window.addEventListener('load',()=>{
 
             this.particles=this.particles.filter(particle=>!particle.deleteParticle);
 
+            this.explosions.forEach(explosion=>{
+                explosion.update();
+            })
+
+            this.explosions=this.explosions.filter(explosion=>!explosion.deleteExplosion);
+
             this.enemies.forEach(enemy=>{
                 enemy.update();
 
                 if(this.detectCollision(this.player,enemy))
                 {
                     // console.log('collision detected');
+                    // var enemyAudio=new Audio('./Assets/videogame-death-sound-43894.mp3');
+                    // enemyAudio.play();
                     enemy.deleteEnemy=true;
                     // this.player.deleteEnemy=true;
+                    this.addExplosion(enemy);
                     for(var i=0;i<10;i++)
                     {
                         this.particles.push(new Particle(this,enemy.x+enemy.width*0.5,enemy.y+enemy.height*0.5));
@@ -395,6 +403,7 @@ window.addEventListener('load',()=>{
                     {
                         enemy.deleteEnemy=true;
                         this.particles.push(new Particle(this,enemy.x+enemy.width*0.5,enemy.y+enemy.height*0.5));
+                        this.addExplosion(enemy);
                         // console.log('collision detected');
                         // if(enemy.lives<=0)
                         // {
@@ -430,16 +439,29 @@ window.addEventListener('load',()=>{
             // this.particles.forEach(particle=>{
             //     particle.draw(context);
             // })
+          
             this.enemies.forEach(enemy=>{
                 enemy.draw(context);
                 // console.log(enemy);
             })
+            // this.explosions.forEach(explosion=>{
+            //     explosion.draw(context);
+            // })
         }
 
         addEnemy()
         {
             this.enemies.push(new Enemy1(this));
             // console.log(this.enemies);
+        }
+
+        addExplosion(enemy)
+        {
+            const random=Math.random();
+            if(random<1){
+            this.explosions.push(new Explosion2(this,enemy.x,enemy.y));
+            this.explosions.push(new Explosion1(this,enemy.x,enemy.y));
+            }
         }
 
         // p1 is player and p2 is enemy
